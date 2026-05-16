@@ -1,4 +1,5 @@
 import { useBlockNoteEditor } from '@blocknote/react';
+import { useLingui } from '@lingui/react/macro';
 import { styled } from '@linaria/react';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import { motion } from 'framer-motion';
@@ -16,6 +17,7 @@ import { DropdownContent } from '@/ui/layout/dropdown/components/DropdownContent
 import { DropdownMenuItemsContainer } from '@/ui/layout/dropdown/components/DropdownMenuItemsContainer';
 import { OverlayContainer } from '@/ui/layout/overlay/components/OverlayContainer';
 import { SelectableList } from '@/ui/layout/selectable-list/components/SelectableList';
+import { MenuItem } from 'twenty-ui/navigation';
 
 export type { SuggestionItem };
 
@@ -28,6 +30,7 @@ export const CustomSlashMenu = ({
   items,
   selectedIndex,
 }: CustomSlashMenuProps) => {
+  const { t } = useLingui();
   const editor = useBlockNoteEditor();
 
   const currentBlock = editor?.getTextCursorPosition()?.block;
@@ -76,15 +79,23 @@ export const CustomSlashMenu = ({
             >
               <DropdownContent>
                 <DropdownMenuItemsContainer hasMaxHeight>
-                  <SelectableList
-                    focusId={SLASH_MENU_DROPDOWN_CLICK_OUTSIDE_ID}
-                    selectableListInstanceId={SLASH_MENU_LIST_ID}
-                    selectableItemIdArray={items.map((item) => item.title)}
-                  >
-                    {items.map((item) => (
-                      <CustomSlashMenuListItem key={item.title} item={item} />
-                    ))}
-                  </SelectableList>
+                  {items.length > 0 ? (
+                    <SelectableList
+                      focusId={SLASH_MENU_DROPDOWN_CLICK_OUTSIDE_ID}
+                      selectableListInstanceId={SLASH_MENU_LIST_ID}
+                      selectableItemIdArray={items.map((item) => item.title)}
+                    >
+                      {items.map((item) => (
+                        <CustomSlashMenuListItem key={item.title} item={item} />
+                      ))}
+                    </SelectableList>
+                  ) : (
+                    <MenuItem
+                      disabled
+                      text={t`No commands found`}
+                      accent="placeholder"
+                    />
+                  )}
                 </DropdownMenuItemsContainer>
               </DropdownContent>
             </OverlayContainer>
