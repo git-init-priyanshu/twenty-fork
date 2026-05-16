@@ -29,6 +29,7 @@ export const StyledPageInfoTextContainer = styled.div`
 `;
 
 export const StyledPageInfoTitleContainer = styled.div`
+  color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.md};
   font-weight: ${themeCssVariables.font.weight.semiBold};
   max-width: 150px;
