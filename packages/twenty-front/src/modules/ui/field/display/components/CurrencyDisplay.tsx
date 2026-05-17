@@ -14,11 +14,17 @@ import { isDefined, formatToShortNumber } from 'twenty-shared/utils';
 import { DEFAULT_DECIMAL_VALUE } from '~/utils/format/formatNumber';
 import { isUndefinedOrNull } from '~/utils/isUndefinedOrNull';
 import { ThemeContext } from 'twenty-ui/theme-constants';
+import { styled } from '@linaria/react';
 
 type CurrencyDisplayProps = {
   currencyValue: FieldCurrencyValue | null | undefined;
   fieldDefinition: FieldDefinition<FieldCurrencyMetadata>;
 };
+
+const StyledOuterSpan = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 export const CurrencyDisplay = ({
   currencyValue,
@@ -57,7 +63,7 @@ export const CurrencyDisplay = ({
       <EllipsisDisplay>
         {shouldShowCurrencyTooltip && (
           <>
-            <span
+            <StyledOuterSpan 
               id={tooltipAnchorId}
               onMouseEnter={() => setShouldRenderTooltip(true)}
               onMouseLeave={() => setShouldRenderTooltip(false)}
@@ -67,7 +73,7 @@ export const CurrencyDisplay = ({
                 size={theme.icon.size.md}
                 stroke={theme.icon.stroke.sm}
               />
-            </span>{' '}
+            </StyledOuterSpan>{' '}
           </>
         )}
         {amountToDisplay !== null
